@@ -11,6 +11,6 @@ def searchPictures(path, extensions):
         for ext in extensionList:
 
             if fnmatch.fnmatch(file, ext):
-                pictureList.append(file)
+                pictureList.append(os.path.join(path, file))
 
     return pictureList

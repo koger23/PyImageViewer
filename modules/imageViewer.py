@@ -19,12 +19,6 @@ class ImageViewer(QWidget):
         self.lblPicture.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         mainlayout.addWidget(self.lblPicture)
 
-        self.lblPicName = QLabel("")
-        self.lblPicName.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
-        mainlayout.addWidget(self.lblPicName)
-
-        print(self.picObjects)
-
         if len(self.picObjects):
             self.setPicture(self.picObjects[0].path)
 
@@ -41,8 +35,10 @@ class ImageViewer(QWidget):
             pixmap = pixmap.scaledToWidth(self.rect().height(), Qt.SmoothTransformation)
 
         print("Setting pixmap... ", pixmap.width(),"x", pixmap.height())
-        self.lblPicName.setText(path)
+
         self.lblPicture.setPixmap(pixmap)
+
+        self.repaint()
 
 
     def resetPicture(self, path=None):

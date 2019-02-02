@@ -1,7 +1,7 @@
 from PySide2.QtWidgets import QWidget, QListWidget, QPushButton, QVBoxLayout, QHBoxLayout, QFileDialog, \
     QListWidgetItem, QStyledItemDelegate, QListView
-from PySide2.QtGui import QIcon
-from PySide2.QtCore import QSize, Qt
+from PySide2.QtGui import QIcon, QPixmap
+from PySide2.QtCore import QSize, Qt, QRect
 
 
 class ImageBrowser(QWidget):
@@ -31,10 +31,16 @@ class BrowserView(QListWidget):
         self.setFixedHeight(170)
 
         self.folderBrowser = folderBrowser
-        self.currentMovie = None
+        self.currentPicture = None
         self.folderBrowser.browser.itemClicked.connect(self.refresh)
 
+    def getSelectePicture(self):
 
+        currentItem = self.currentItem()
+
+        if currentItem:
+            curPicItem = currentItem.data(Qt.UserRole)
+            return curPicItem
 
     def refresh(self):
         self.clear() # Itt csak egy self kell, mert már benne vagyunk a ListWidget-ben
@@ -61,12 +67,18 @@ class MyDelegate(QStyledItemDelegate):
     def paint(self, painter, option, index):
 
         rect = option.rect
+        painter.drawRect(rect)
 
         pictureObj = index.data(Qt.UserRole)
 
-        painter.drawText(rect, Qt.AlignVCenter | Qt.AlignHCenter, pictureObj.name)
+        # Picture drawing
+        pixmap = QPixmap(pictureObj.path)
+        pixmap = pixmap.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+        pixmapRect = QRect(rect.x() + 5, rect.y() + 5, pixmap.width(), pixmap.height())
 
-        painter.drawRect(rect)
+        painter.drawPixmap(pixmapRect, pixmap)
+
+
 
 if __name__ == '__main__':
 
