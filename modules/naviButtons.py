@@ -21,8 +21,14 @@ class NaviButtons(QWidget):
         self.btnZoomIn = QPushButton("+")
         mainLayout.addWidget(self.btnZoomIn)
 
-        self.btnZoomOut = QPushButton(">")
+        self.btnZoomOut = QPushButton("-")
         mainLayout.addWidget(self.btnZoomOut)
+
+        self.btnRotateCw = QPushButton("Rotate +")
+        mainLayout.addWidget(self.btnRotateCw)
+
+        self.btnRotateCCw = QPushButton("Rotate -")
+        mainLayout.addWidget(self.btnRotateCCw)
 
 
 

@@ -15,38 +15,57 @@ class RightPanel(QWidget):
         self.naviButtons = naviButtons.NaviButtons()
         mainLayout.addWidget(self.naviButtons)
 
-        self.imgViewer = imageViewer.ImageViewer(folderBrowser)
+        self.imgBrowser = imageBrowser.ImageBrowser(folderBrowser)
+        self.imgViewer = imageViewer.ImageViewer(self.imgBrowser)
         mainLayout.addWidget(self.imgViewer)
 
-        self.imgBrowser = imageBrowser.ImageBrowser(folderBrowser)
         mainLayout.addWidget(self.imgBrowser)
         self.imgBrowser.imgBrowser.itemSelectionChanged.connect(self.getSelectedObject)
 
         self.naviButtons.btnZoomIn.clicked.connect(self.zoom_in)
         self.naviButtons.btnZoomOut.clicked.connect(self.zoom_out)
+        self.naviButtons.btnRotateCw.clicked.connect(self.rotate_CW)
+        self.naviButtons.btnRotateCCw.clicked.connect(self.rotate_CCW)
 
     def zoom_in(self):
 
-        path = self.imgBrowser.imgBrowser.getSelectePicture().path
+        obj = self.imgBrowser.imgBrowser.getSelectePicture()
 
-        if path:
-            self.imgViewer.zoomIn(path)
+        if obj:
+            self.imgViewer.zoomIn(obj)
 
     def zoom_out(self):
 
-        path = self.imgBrowser.imgBrowser.getSelectePicture().path
+        obj = self.imgBrowser.imgBrowser.getSelectePicture()
 
-        if path:
-            self.imgViewer.zoomOut(path)
+        if obj:
+            self.imgViewer.zoomOut(obj)
 
+    def rotate_CW(self):
+
+        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+
+        if obj:
+            obj.rotateCW()
+            self.imgBrowser.repaint()
+            self.imgViewer.refreshView()
+
+    def rotate_CCW(self):
+
+        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+
+        if obj:
+            obj.rotateCCW()
+            self.imgBrowser.repaint()
+            self.imgViewer.refreshView()
 
 
     def getSelectedObject(self):
 
-        path = self.imgBrowser.imgBrowser.getSelectePicture().path
+        obj = self.imgBrowser.imgBrowser.getSelectePicture()
 
-        if path:
-            self.imgViewer.setPicture(path)
+        if obj:
+            self.imgViewer.setPicture(obj)
 
 
 if __name__ == '__main__':

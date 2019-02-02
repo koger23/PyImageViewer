@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QFileSystemModel, QTreeView, QApplication, QMainWindow, QHBoxLayout, QVBoxLayout, QWidget
+from PySide2.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget
 from modules import rightSidePanel, leftSidePanel
 import sys
 

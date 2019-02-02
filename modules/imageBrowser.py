@@ -81,8 +81,7 @@ class MyDelegate(QStyledItemDelegate):
         pictureObj = index.data(Qt.UserRole)
 
         # Picture drawing
-        pixmap = QPixmap(pictureObj.path)
-        pixmap = pixmap.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+        pixmap = QPixmap.fromImage(pictureObj.thumbnail)
                 
         pixmapRect = QRect(rect.x() + ((rect.width()-pixmap.width())/2), rect.y() + ((rect.height()-pixmap.height())/2), pixmap.width(), pixmap.height())
         painter.drawPixmap(pixmapRect, pixmap)

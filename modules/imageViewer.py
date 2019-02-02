@@ -1,25 +1,24 @@
 from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel, QScrollArea, QSizePolicy
-from PySide2.QtGui import QPixmap, QImage, QPalette, QInputEvent
-from PySide2.QtCore import Qt, QSize, QRect
+from PySide2.QtGui import QPixmap, QPalette
+from PySide2.QtCore import Qt
 
 
 class ImageViewer(QWidget):
 
-    def __init__(self, folderBrowser, parent=None):
+    def __init__(self, imageBrowser, parent=None):
         super(ImageViewer, self).__init__(parent)
         self.setMinimumSize(700, 300)
-        self.scale = 1.0
 
-        self.picObjects = None
+        self.picObject = None
 
-        self.picObjects = folderBrowser.browser.getPictureObjects()
+        self.imageBrowser = imageBrowser
 
         mainlayout = QHBoxLayout(self)
 
         self.lblPicture = QLabel("No image...")
         self.lblPicture.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         self.lblPicture.setBackgroundRole(QPalette.Dark)
-        self.lblPicture.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.lblPicture.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.lblPicture.setScaledContents(False)
         mainlayout.addWidget(self.lblPicture)
 
@@ -28,52 +27,80 @@ class ImageViewer(QWidget):
         self.scrollArea.setWidget(self.lblPicture)
         mainlayout.addWidget(self.scrollArea)
 
-    def zoomIn(self, path):
+    def _rotateCW(self):
 
-        print("Zoom in")
-        self.scale = self.scale*1.1
-        self.setPicture(path, self.scale)
+        self.picObject.rotateCW()
+        self.setPicture(self.picObject)
+        self.imageBrowser.imgBrowser.refresh()
 
-    def zoomOut(self, path):
+    def _rotateCCW(self):
 
-        print("Zoom in")
-        self.scale = self.scale*0.9
-        self.setPicture(path, self.scale)
+        self.picObject.rotateCCW()
+        self.setPicture(self.picObject)
+        self.imageBrowser.imgBrowser.refresh()
+
+    def zoomIn(self, imageObj):
+
+        imageObj.scale = imageObj.scale*1.1
+        self.setPicture(imageObj)
+        self.repaint()
 
 
+    def zoomOut(self, imageObj):
 
-    def setPicture(self, path=None, scale=1.0):
+        imageObj.scale = imageObj.scale*0.9
+        self.setPicture(imageObj)
+        self.repaint()
 
-        if path:
 
-            print(path)
-            # pixmap = QPixmap(path)
-            #
-            # Resizing picture
-            # if pixmap.width() > self.rect().width():
-            #     pixmap = pixmap.scaled(QSize(self.rect().width(), pixmap.height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
-            #
-            # if pixmap.height() > self.rect().height():
-            #     pixmap = pixmap.scaled(QSize(pixmap.width(), self.rect().height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
-            # self.lblPicture.setPixmap(pixmap)
+    def setPicture(self, imageObj=None):
 
-            self.image = QImage(path)
+        if imageObj.path:
 
-            if self.image.height() > self.scrollArea.height():
-                self.image = self.image.scaledToHeight(self.scrollArea.height()*scale, Qt.SmoothTransformation)
+            self.picObject = imageObj
 
-            if self.image.width() > self.scrollArea.width():
-                self.image = self.image.scaledToWidth(self.scrollArea.width()*scale, Qt.SmoothTransformation)
+            if imageObj.image.height() > self.scrollArea.height():
+                imageObj.image = imageObj.image.scaledToHeight(self.scrollArea.height() * imageObj.scale - 2, Qt.SmoothTransformation)
 
-            self.lblPicture.setPixmap(QPixmap.fromImage(self.image))
+            if imageObj.image.width() > self.scrollArea.width():
+                imageObj.image = imageObj.image.scaledToWidth(self.scrollArea.width() * imageObj.scale - 2, Qt.SmoothTransformation)
+
+            if imageObj.scale != 1.0:
+
+                if imageObj.image.width() == self.scrollArea.width():
+                    imageObj.image = imageObj.image.scaledToWidth(self.scrollArea.width() * imageObj.scale - 2, Qt.SmoothTransformation)
+                else:
+                    imageObj.image = imageObj.image.scaledToWidth(self.scrollArea.height() * imageObj.scale - 2, Qt.SmoothTransformation)
+
+            self.lblPicture.setPixmap(QPixmap.fromImage(imageObj.image))
 
 
         else:
             self.lblPicture.setText("Select a picture...")
 
+
+    def refreshView(self):
+
+        if self.picObject.image.height() > self.scrollArea.height():
+            self.picObject.image = self.picObject.image.scaledToHeight(self.scrollArea.height() * self.picObject.scale - 2,
+                                                           Qt.SmoothTransformation)
+
+        if self.picObject.image.width() > self.scrollArea.width():
+            self.picObject.image = self.picObject.image.scaledToWidth(self.scrollArea.width() * self.picObject.scale - 2,
+                                                          Qt.SmoothTransformation)
+
+        if self.picObject.scale != 1.0:
+
+            if self.picObject.image.width() == self.scrollArea.width():
+                self.picObject.image = self.picObject.image.scaledToWidth(self.scrollArea.width() * self.picObject.scale - 2,
+                                                              Qt.SmoothTransformation)
+            else:
+                self.picObject.image = self.picObject.image.scaledToWidth(self.scrollArea.height() * self.picObject.scale - 2,
+                                                              Qt.SmoothTransformation)
+
+        self.lblPicture.setPixmap(QPixmap.fromImage(self.picObject.image))
+
         self.repaint()
-
-
 
 if __name__ == '__main__':
 
