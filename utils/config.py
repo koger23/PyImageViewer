@@ -5,7 +5,7 @@ configFile = "config.json"
 def loadConfig():
 
     if not os.path.exists(configFile):
-        return {"folders":[]}
+        return {"folders":[], "extensions":["*.png", "*.jpg", "*.bmp", "*.svg", "*.tiff", "*.gif"]}
 
     with open(configFile, "r") as dataFile:
         datas = json.load(dataFile)

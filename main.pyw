@@ -1,5 +1,5 @@
 from PySide2.QtWidgets import QFileSystemModel, QTreeView, QApplication, QMainWindow, QHBoxLayout, QVBoxLayout, QWidget
-from PySide2.QtCore import QDir
+from modules import rightSidePanel, leftSidePanel
 import sys
 
 
@@ -15,6 +15,13 @@ class PyImageViewer(QMainWindow):
         self.centralWidget = QWidget()
         mainLayout = QHBoxLayout(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
+
+        panelLeft = leftSidePanel.LeftPanel()
+        mainLayout.addWidget(panelLeft)
+
+        panelRight = rightSidePanel.RightPanel(panelLeft.folderBrowser)
+        mainLayout.addWidget(panelRight)
+
 
 
 app = QApplication(sys.argv)

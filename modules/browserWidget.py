@@ -14,8 +14,7 @@ class FolderBrowser(QWidget):
         mainLayout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(mainLayout)
 
-        self.browser = BrowserView()
-        mainLayout.addWidget(self.browser)
+        self.config = config.loadConfig()
 
         buttonLayout = QHBoxLayout()
         mainLayout.addLayout(buttonLayout)
@@ -28,8 +27,11 @@ class FolderBrowser(QWidget):
         buttonLayout.addWidget(removeFolder_bttn)
         removeFolder_bttn.clicked.connect(self.removeFolder)
 
-        self.config = config.loadConfig()
+        self.browser = BrowserView(self.config)
+        mainLayout.addWidget(self.browser)
+
         self.browser.refreshView(self.config)
+
 
     def addFolder(self):
 
@@ -61,10 +63,12 @@ class FolderBrowser(QWidget):
 
 class BrowserView(QListWidget):
 
-    def __init__(self):
+    def __init__(self, config):
         super(BrowserView, self).__init__()
 
         self.currentFolder = None
+
+        self.config = config
 
         self.pictureObjects = []
 
@@ -75,7 +79,7 @@ class BrowserView(QListWidget):
         self.pictureObjects = []
         self.currentFolder = self.currentItem().path
 
-        pictureFileList = pictureSearch.searchPictures(self.currentFolder)
+        pictureFileList = pictureSearch.searchPictures(self.currentFolder, self.config["extensions"])
 
         for picPath in pictureFileList:
 
@@ -83,6 +87,13 @@ class BrowserView(QListWidget):
 
             self.pictureObjects.append(pictureObj)
 
+    def getPictureObjects(self):
+
+        return self.pictureObjects
+
+    def getSelectedItem(self):
+
+        return self.currentItem()
 
     def refreshView(self, config):
 

@@ -1,8 +1,8 @@
 import os, fnmatch
 
-def searchPictures(path):
+def searchPictures(path, extensions):
 
-    extensionList = ["*.png", "*.jpg", "*.bmp", "*.svg", "*.tiff", "*.gif"]
+    extensionList = extensions
 
     pictureList = []
 
