@@ -7,6 +7,7 @@ class NaviButtons(QWidget):
 
     def __init__(self):
         super(NaviButtons, self).__init__()
+        self.setFixedHeight(50)
 
         mainLayout = QHBoxLayout(self)
 

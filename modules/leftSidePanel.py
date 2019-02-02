@@ -5,6 +5,7 @@ class LeftPanel(QWidget):
 
     def __init__(self):
         super(LeftPanel, self).__init__()
+        self.setFixedWidth(250)
 
         mainLayout = QVBoxLayout()
         mainLayout.setContentsMargins(0, 0, 0, 0)

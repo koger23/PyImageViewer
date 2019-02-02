@@ -10,6 +10,7 @@ class PyImageViewer(QMainWindow):
 
         super(PyImageViewer, self).__init__()
         self.setWindowTitle("PyImageViewer")
+        self.setMinimumSize(1200, 800)
 
 
         self.centralWidget = QWidget()

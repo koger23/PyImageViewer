@@ -1,6 +1,6 @@
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel, QPushButton
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel
 from PySide2.QtGui import QPixmap
-from PySide2.QtCore import Qt
+from PySide2.QtCore import Qt, QSize
 
 
 class ImageViewer(QWidget):
@@ -27,35 +27,23 @@ class ImageViewer(QWidget):
 
         pixmap = QPixmap(path)
 
+        print("self.rect: " , self.rect().width(), "x", self.rect().height())
+
         # Resizing picture
         if pixmap.width() > self.rect().width():
-            pixmap = pixmap.scaledToWidth(self.rect().width(), Qt.SmoothTransformation)
+            # pixmap = pixmap.scaledToWidth(self.rect().width(), Qt.SmoothTransformation)
+            pixmap = pixmap.scaled(QSize(self.rect().width(), pixmap.height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
 
         if pixmap.height() > self.rect().height():
-            pixmap = pixmap.scaledToWidth(self.rect().height(), Qt.SmoothTransformation)
+            # pixmap = pixmap.scaledToWidth(self.rect().height(), Qt.SmoothTransformation)
+            pixmap = pixmap.scaled(QSize(pixmap.width(), self.rect().height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
 
-        print("Setting pixmap... ", pixmap.width(),"x", pixmap.height())
+
+        print("Pixmap... ", pixmap.width(),"x", pixmap.height())
 
         self.lblPicture.setPixmap(pixmap)
 
         self.repaint()
-
-
-    def resetPicture(self, path=None):
-
-        print("reset")
-        pixmap = QPixmap(path)
-
-        # Resizing picture
-        if pixmap.width() > self.rect().width():
-            pixmap = pixmap.scaledToWidth(self.rect().width(), Qt.SmoothTransformation)
-
-        if pixmap.height() > self.rect().height():
-            pixmap = pixmap.scaledToWidth(self.rect().height(), Qt.SmoothTransformation)
-
-        print("Setting pixmap... ", pixmap.width(),"x", pixmap.height())
-        self.lblPicName.setText(path)
-        self.lblPicture.setPixmap(pixmap)
 
 
 if __name__ == '__main__':
