@@ -1,12 +1,12 @@
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel
-from PySide2.QtGui import QPixmap
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel, QScrollArea, QSizePolicy
+from PySide2.QtGui import QPixmap, QImage, QPalette, QInputEvent
 from PySide2.QtCore import Qt, QSize
 
 
 class ImageViewer(QWidget):
 
-    def __init__(self, folderBrowser):
-        super(ImageViewer, self).__init__()
+    def __init__(self, folderBrowser, parent=None):
+        super(ImageViewer, self).__init__(parent)
         self.setMinimumSize(700, 300)
 
         self.picObjects = None
@@ -17,33 +17,43 @@ class ImageViewer(QWidget):
 
         self.lblPicture = QLabel("No image...")
         self.lblPicture.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        self.lblPicture.setBackgroundRole(QPalette.Dark)
+        # self.lblPicture.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.lblPicture.setScaledContents(False)
         mainlayout.addWidget(self.lblPicture)
 
-        if len(self.picObjects):
-            self.setPicture(self.picObjects[0].path)
+        self.scrollArea = QScrollArea()
+        self.scrollArea.setBackgroundRole(QPalette.Dark)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setWidget(self.lblPicture)
+        mainlayout.addWidget(self.scrollArea)
+
 
 
     def setPicture(self, path=None):
 
-        pixmap = QPixmap(path)
+        if path:
 
-        print("self.rect: " , self.rect().width(), "x", self.rect().height())
+            print(path)
+            # pixmap = QPixmap(path)
+            #
+            # Resizing picture
+            # if pixmap.width() > self.rect().width():
+            #     pixmap = pixmap.scaled(QSize(self.rect().width(), pixmap.height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+            #
+            # if pixmap.height() > self.rect().height():
+            #     pixmap = pixmap.scaled(QSize(pixmap.width(), self.rect().height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+            # self.lblPicture.setPixmap(pixmap)
 
-        # Resizing picture
-        if pixmap.width() > self.rect().width():
-            # pixmap = pixmap.scaledToWidth(self.rect().width(), Qt.SmoothTransformation)
-            pixmap = pixmap.scaled(QSize(self.rect().width(), pixmap.height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
-
-        if pixmap.height() > self.rect().height():
-            # pixmap = pixmap.scaledToWidth(self.rect().height(), Qt.SmoothTransformation)
-            pixmap = pixmap.scaled(QSize(pixmap.width(), self.rect().height()), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+            self.image = QImage(path)
+            self.lblPicture.setPixmap(QPixmap.fromImage(self.image))
 
 
-        print("Pixmap... ", pixmap.width(),"x", pixmap.height())
-
-        self.lblPicture.setPixmap(pixmap)
+        else:
+            self.lblPicture.setText("Select a picture...")
 
         self.repaint()
+
 
 
 if __name__ == '__main__':

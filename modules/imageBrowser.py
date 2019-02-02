@@ -8,13 +8,14 @@ class ImageBrowser(QWidget):
 
     def __init__(self, folderBrowser):
         super(ImageBrowser, self).__init__()
-        self.setMaximumHeight(200)
+        self.setFixedHeight(170)
 
         mainLayout = QVBoxLayout()
         mainLayout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(mainLayout)
 
         self.imgBrowser = BrowserView(folderBrowser)
+        self.imgBrowser.setObjectName("ImageBrowser")
         mainLayout.addWidget(self.imgBrowser)
 
 class BrowserView(QListWidget):
@@ -66,15 +67,16 @@ class MyDelegate(QStyledItemDelegate):
         super(MyDelegate, self).__init__()
 
         self.whitePen = QPen(QColor("#ffffff"))
-        self.bgColor = QBrush(QColor(255, 255, 255, 60))
-        self.selectedColor = QBrush(QColor(30, 30, 30, 60))
+        self.bgColor = QBrush(QColor(255, 255, 255, 0))
+        self.selectedColor = QBrush(QColor( 126, 144, 255, 70))
 
     def paint(self, painter, option, index):
 
+        painter.setPen(Qt.NoPen)
+        painter.setBrush(self.bgColor)
+
         rect = option.rect
         painter.drawRect(rect)
-
-        painter.setPen(self.whitePen)
 
         pictureObj = index.data(Qt.UserRole)
 
@@ -82,16 +84,16 @@ class MyDelegate(QStyledItemDelegate):
         pixmap = QPixmap(pictureObj.path)
         pixmap = pixmap.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
                 
-        pixmapRect = QRect(rect.x() + 5, rect.y() + 5, pixmap.width(), pixmap.height())
+        pixmapRect = QRect(rect.x() + ((rect.width()-pixmap.width())/2), rect.y() + ((rect.height()-pixmap.height())/2), pixmap.width(), pixmap.height())
         painter.drawPixmap(pixmapRect, pixmap)
 
         if option.state & QStyle.State_Selected:
             painter.setBrush(self.selectedColor)
+            selectionRect = QRect(rect.x(), rect.y(), rect.height(), rect.width())
+            painter.drawRect(selectionRect)
         else:
             painter.setBrush(self.bgColor)
 
-        selectionRect = QRect(rect.x(), rect.y(), rect.height(), rect.width())
-        painter.drawRect(selectionRect)
 
 
 

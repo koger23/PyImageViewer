@@ -10,14 +10,13 @@ class NaviButtons(QWidget):
         self.setFixedHeight(50)
 
         mainLayout = QHBoxLayout(self)
+        mainLayout.setContentsMargins(0, 0, 0, 0)
 
         self.btnLeft = QPushButton("<")
         mainLayout.addWidget(self.btnLeft)
-        self.btnLeft.setMaximumWidth(30)
 
         self.btnRight = QPushButton(">")
         mainLayout.addWidget(self.btnRight)
-        self.btnRight.setMaximumWidth(30)
 
 
 

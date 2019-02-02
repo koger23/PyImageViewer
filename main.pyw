@@ -23,6 +23,14 @@ class PyImageViewer(QMainWindow):
         panelRight = rightSidePanel.RightPanel(panelLeft.folderBrowser)
         mainLayout.addWidget(panelRight)
 
+        self.applyStyle()
+
+    def applyStyle(self):
+
+        with open("images/style.qss", "r") as styleFile:
+            style = styleFile.read()
+
+        self.setStyleSheet(style)
 
 
 app = QApplication(sys.argv)

@@ -1,5 +1,5 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout
-from modules import browserWidget, treeWidget
+from modules import folderBrowserWidget, treeWidget
 
 class LeftPanel(QWidget):
 
@@ -11,18 +11,19 @@ class LeftPanel(QWidget):
         mainLayout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(mainLayout)
 
-        self.folderBrowser = browserWidget.FolderBrowser()
+        self.folderBrowser = folderBrowserWidget.FolderBrowser()
         mainLayout.addWidget(self.folderBrowser)
         self.folderBrowser.browser.setCurrentRow(0) # select first folder in list by default at start
-        self.folderBrowser.browser.itemSelectionChanged.connect(self.selectedItemChanged)
+        # self.folderBrowser.browser.itemSelectionChanged.connect(self.selectedItemChanged)
 
         try:
             path = self.folderBrowser.browser.currentItem().path
         except AttributeError:
             path = ""
             pass
-        self.treeView = treeWidget.TreeView(path)
-        mainLayout.addWidget(self.treeView)
+
+        # self.treeView = treeWidget.TreeView(path)
+        # mainLayout.addWidget(self.treeView)
 
     def selectedItemChanged(self):
 

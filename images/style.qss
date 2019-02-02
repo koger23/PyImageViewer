@@ -1,0 +1,60 @@
+QWidget {
+    background-color: #313131;
+    color: #cccccc
+}
+
+QLabel {
+    background-color:transparent;
+    font: 15pt "Helvetica";
+    color: #cccccc
+}
+
+#ImageBrowser{
+    background-color:  #212121
+}
+
+#FolderBrowser{
+    background-color:  #212121
+}
+
+QScrollBar:handle:vertical {
+    border: 0px solid #040c44;
+    background:  #393939  ;
+}
+
+QScrollBar:handle:horizontal {
+    border: 0px solid  #040c44;
+    background:  #393939  ;
+}
+
+QTextEdit {
+    background-color:transparent;
+    border: 0px;
+    font: 10pt "Helvetica";
+}
+
+
+QListWidget {
+    background-color:transparent;
+    border: 0px;
+}
+
+QPushButton {
+    background-color:  #313131;
+    border: 0px;
+    padding: 3px 15px 3px 15px;
+    color:#ffffff
+}
+
+QPushButton:pressed {
+    padding: 3px 14px 3px 16px;
+}
+
+QPushButton:hover {
+    background-color: rgba(143, 220, 239, 25%);
+}
+
+QPushButton:checked{
+    background-color: rgba(0, 0, 0, 80%);
+    color: #222;
+}

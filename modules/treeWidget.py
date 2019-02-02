@@ -24,6 +24,9 @@ class TreeView(QWidget):
         self.tree = QTreeView()
         self.tree.setModel(self.model)
         self.tree.setRootIndex(self.model.index(self.selectedPath))
+        self.tree.setColumnHidden(1, True)
+        self.tree.setColumnHidden(2, True)
+        self.tree.setColumnHidden(3, True)
         mainLayout.addWidget(self.tree)
 
     def changePath(self, path):
@@ -37,6 +40,9 @@ class TreeView(QWidget):
 
         self.tree.setModel(self.model)
         self.tree.setRootIndex(self.model.index(self.selectedPath))
+        self.tree.setColumnHidden(1, True)
+        self.tree.setColumnHidden(2, True)
+        self.tree.setColumnHidden(3, True)
 
 
         self.repaint()

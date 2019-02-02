@@ -12,6 +12,9 @@ class RightPanel(QWidget):
 
         self.folderBrowser = folderBrowser
 
+        self.naviButtons = naviButtons.NaviButtons()
+        mainLayout.addWidget(self.naviButtons)
+
         self.imgViewer = imageViewer.ImageViewer(folderBrowser)
         mainLayout.addWidget(self.imgViewer)
 
@@ -19,13 +22,13 @@ class RightPanel(QWidget):
         mainLayout.addWidget(self.imgBrowser)
         self.imgBrowser.imgBrowser.itemSelectionChanged.connect(self.getSelectedObject)
 
-        self.naviButtons = naviButtons.NaviButtons()
-        mainLayout.addWidget(self.naviButtons)
 
     def getSelectedObject(self):
 
-        self.imgViewer.setPicture(self.imgBrowser.imgBrowser.getSelectePicture().path)
-        print(self.imgBrowser.imgBrowser.getSelectePicture().path)
+        path = self.imgBrowser.imgBrowser.getSelectePicture().path
+
+        if path:
+            self.imgViewer.setPicture(path)
 
 
 if __name__ == '__main__':

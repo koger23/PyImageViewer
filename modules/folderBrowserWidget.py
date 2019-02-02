@@ -28,6 +28,7 @@ class FolderBrowser(QWidget):
         removeFolder_bttn.clicked.connect(self.removeFolder)
 
         self.browser = BrowserView(self.config)
+        self.browser.setObjectName("FolderBrowser")
         mainLayout.addWidget(self.browser)
 
         self.browser.refreshView(self.config)
