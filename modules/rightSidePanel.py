@@ -22,6 +22,24 @@ class RightPanel(QWidget):
         mainLayout.addWidget(self.imgBrowser)
         self.imgBrowser.imgBrowser.itemSelectionChanged.connect(self.getSelectedObject)
 
+        self.naviButtons.btnZoomIn.clicked.connect(self.zoom_in)
+        self.naviButtons.btnZoomOut.clicked.connect(self.zoom_out)
+
+    def zoom_in(self):
+
+        path = self.imgBrowser.imgBrowser.getSelectePicture().path
+
+        if path:
+            self.imgViewer.zoomIn(path)
+
+    def zoom_out(self):
+
+        path = self.imgBrowser.imgBrowser.getSelectePicture().path
+
+        if path:
+            self.imgViewer.zoomOut(path)
+
+
 
     def getSelectedObject(self):
 
