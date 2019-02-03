@@ -21,12 +21,18 @@ class Picture(object):
         os.remove(self.path)
 
     def verticalFlip(self):
-        self.image = self.image.mirrored(vertically=True, horizontally=False)
+        img = QImage(self.path)
+        img = img.mirrored(vertically=True, horizontally=False)
+        self.image = img
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+        img.save(self.path)
 
     def horizontalFlip(self):
-        self.image = self.image.mirrored(horizontally=True, vertically=False)
+        img = QImage(self.path)
+        img = img.mirrored(horizontally=True, vertically=False)
+        self.image = img
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+        img.save(self.path)
 
     def zoomIn(self):
         self.scale = self.scale*0.9
@@ -36,21 +42,31 @@ class Picture(object):
 
     def rotateCW(self):
 
+        img = QImage(self.path)
+
         transform = QTransform()
-        transform.translate(self.image.width() / 2, self.image.height() / 2)
+        transform.translate(img.width() / 2, img.height() / 2)
         transform.rotate(90)
-        self.image = self.image.transformed(transform)
+
+        img = img.transformed(transform)
+        img.save(self.path)
+        self.image = img
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
-        # self.saveImage()
+
 
     def rotateCCW(self):
+
+        img = QImage(self.path)
 
         transform = QTransform()
         transform.translate(self.image.width() / 2, self.image.height() / 2)
         transform.rotate(-90)
-        self.image = self.image.transformed(transform)
+
+        img = img.transformed(transform)
+        img.save(self.path)
+
+        self.image = img
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
-        # self.saveImage()
 
     def saveImage(self):
 

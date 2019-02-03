@@ -77,6 +77,7 @@ class PictureItem(QListWidgetItem):
 
         self.setToolTip(str(pictureObj.name) + "\n" + pictureObj.resolution)
 
+
 class MyDelegate(QStyledItemDelegate):
 
     def __init__(self):

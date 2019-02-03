@@ -116,7 +116,10 @@ class FolderItem(QListWidgetItem):
         folderName = self.path.split("/")[-1]
 
         self.setText(folderName)
+
         self.setToolTip(self.path)
+
+        self.setIcon(QIcon("images/icon_folder.png"))
 
 
 
