@@ -55,5 +55,10 @@ class NaviButtons(QWidget):
         pixmapFlipVertical = QPixmap('images/icon_vertical_flip.png')
         self.btnFlipVertical.setIcon(pixmapFlipVertical)
 
+        self.btnDeletePicture = QPushButton()
+        mainLayout.addWidget(self.btnDeletePicture)
+        pixmapDeletePic = QPixmap('images/icon_delete.png')
+        self.btnDeletePicture.setIcon(pixmapDeletePic)
+
 
 

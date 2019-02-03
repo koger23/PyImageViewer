@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QWidget, QVBoxLayout
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QMessageBox
 from modules import imageViewer, naviButtons, imageBrowser
 
 class RightPanel(QWidget):
@@ -20,8 +20,10 @@ class RightPanel(QWidget):
         mainLayout.addWidget(self.imgViewer)
 
         mainLayout.addWidget(self.imgBrowser)
+
         self.imgBrowser.imgBrowser.itemSelectionChanged.connect(self.getSelectedObject)
 
+        # Connect to button signals
         self.naviButtons.btnLeft.clicked.connect(self.imgBrowser.prevItem)
         self.naviButtons.btnRight.clicked.connect(self.imgBrowser.nextItem)
         self.naviButtons.btnZoomIn.clicked.connect(self.zoom_in)
@@ -30,6 +32,29 @@ class RightPanel(QWidget):
         self.naviButtons.btnRotateCCw.clicked.connect(self.rotate_CCW)
         self.naviButtons.btnFlipHorizontal.clicked.connect(self.flip_Horizontal)
         self.naviButtons.btnFlipVertical.clicked.connect(self.flip_Vertical)
+        self.naviButtons.btnDeletePicture.clicked.connect(self.delete_Picture)
+
+    def delete_Picture(self):
+
+        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+
+        if obj:
+
+            msgBox = QMessageBox()
+            msgBox.setText(u'The picture will be deleted from your computer.\n\nAre you sure?')
+            msgBox.setWindowTitle('File deletion')
+            msgBox.setIcon(QMessageBox.Warning)
+            msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+            msgBox.setDefaultButton(QMessageBox.Cancel)
+            response = msgBox.exec_()
+
+            if response == QMessageBox.Yes:
+                obj.deletePicture()
+                self.imgBrowser.imgBrowser.takeItem(self.imgBrowser.imgBrowser.currentRow())
+            elif QMessageBox.Cancel:
+                return
+            else:
+                return
 
 
     def zoom_in(self):

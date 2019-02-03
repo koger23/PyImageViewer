@@ -1,6 +1,7 @@
 import os
 from PySide2.QtGui import QImage, QTransform
 from PySide2.QtCore import QSize, Qt
+from PySide2.QtWidgets import QMessageBox
 
 
 class Picture(object):
@@ -15,6 +16,9 @@ class Picture(object):
         self.image = QImage(self.path)
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
         self.resolution = "Resolution: " + str(self.image.width()) + "x" + str(self.image.height()) + "px"
+
+    def deletePicture(self):
+        os.remove(self.path)
 
     def verticalFlip(self):
         self.image = self.image.mirrored(vertically=True, horizontally=False)
