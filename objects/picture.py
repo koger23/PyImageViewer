@@ -14,6 +14,15 @@ class Picture(object):
         self.scale = 1.0
         self.image = QImage(self.path)
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+        self.resolution = "Resolution: " + str(self.image.width()) + "x" + str(self.image.height()) + "px"
+
+    def verticalFlip(self):
+        self.image = self.image.mirrored(vertically=True, horizontally=False)
+        self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
+
+    def horizontalFlip(self):
+        self.image = self.image.mirrored(horizontally=True, vertically=False)
+        self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
 
     def zoomIn(self):
         self.scale = self.scale*0.9

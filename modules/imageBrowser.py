@@ -75,6 +75,8 @@ class PictureItem(QListWidgetItem):
 
         self.setData(Qt.UserRole, pictureObj)
 
+        self.setToolTip(str(pictureObj.name) + "\n" + pictureObj.resolution)
+
 class MyDelegate(QStyledItemDelegate):
 
     def __init__(self):
@@ -106,6 +108,7 @@ class MyDelegate(QStyledItemDelegate):
             painter.drawRect(selectionRect)
         else:
             painter.setBrush(self.bgColor)
+
 
 
 

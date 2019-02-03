@@ -45,5 +45,15 @@ class NaviButtons(QWidget):
         pixmapCCw = QPixmap('images/icon_rotate_ccw.png')
         self.btnRotateCCw.setIcon(pixmapCCw)
 
+        self.btnFlipHorizontal = QPushButton()
+        mainLayout.addWidget(self.btnFlipHorizontal)
+        pixmapFlipHorizontal = QPixmap('images/icon_horizontal_flip.png')
+        self.btnFlipHorizontal.setIcon(pixmapFlipHorizontal)
+
+        self.btnFlipVertical = QPushButton()
+        mainLayout.addWidget(self.btnFlipVertical)
+        pixmapFlipVertical = QPixmap('images/icon_vertical_flip.png')
+        self.btnFlipVertical.setIcon(pixmapFlipVertical)
+
 
 
