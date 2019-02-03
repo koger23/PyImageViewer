@@ -1,7 +1,7 @@
 from PySide2.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget
+from PySide2.QtGui import QPixmap
 from modules import rightSidePanel, leftSidePanel
 import sys
-
 
 
 class PyImageViewer(QMainWindow):
@@ -11,6 +11,7 @@ class PyImageViewer(QMainWindow):
         super(PyImageViewer, self).__init__()
         self.setWindowTitle("PyImageViewer")
         self.setMinimumSize(1200, 800)
+        self.setWindowIcon(QPixmap('images/icon_picture.jpg'))
 
 
         self.centralWidget = QWidget()
