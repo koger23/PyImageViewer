@@ -18,6 +18,20 @@ class ImageBrowser(QWidget):
         self.imgBrowser.setObjectName("ImageBrowser")
         mainLayout.addWidget(self.imgBrowser)
 
+    def nextItem(self):
+
+        self.imgBrowser.setCurrentRow(self.imgBrowser.currentIndex().row()+1)
+
+        if self.imgBrowser.currentIndex().row() == -1:
+            self.imgBrowser.setCurrentRow(0)
+
+    def prevItem(self):
+
+        self.imgBrowser.setCurrentRow(self.imgBrowser.currentIndex().row()-1)
+
+        if self.imgBrowser.currentIndex().row() == -1:
+            self.imgBrowser.setCurrentRow(0)
+
 class BrowserView(QListWidget):
 
     def __init__(self, folderBrowser):
