@@ -43,15 +43,16 @@ class ImageViewer(QWidget):
 
         imageObj.scale = imageObj.scale*1.1
         self.setPicture(imageObj)
-        self.repaint()
 
+    def zoomToOriginal(self, imageObj):
+
+        imageObj.scale = 1.0
+        self.setPicture(imageObj)
 
     def zoomOut(self, imageObj):
 
         imageObj.scale = imageObj.scale*0.9
         self.setPicture(imageObj)
-        self.repaint()
-
 
     def setPicture(self, imageObj=None):
 

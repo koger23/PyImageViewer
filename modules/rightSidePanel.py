@@ -27,6 +27,7 @@ class RightPanel(QWidget):
         self.naviButtons.btnLeft.clicked.connect(self.imgBrowser.prevItem)
         self.naviButtons.btnRight.clicked.connect(self.imgBrowser.nextItem)
         self.naviButtons.btnZoomIn.clicked.connect(self.zoom_in)
+        self.naviButtons.btnZoomSetBack.clicked.connect(self.zoom_back_to_original)
         self.naviButtons.btnZoomOut.clicked.connect(self.zoom_out)
         self.naviButtons.btnRotateCw.clicked.connect(self.rotate_CW)
         self.naviButtons.btnRotateCCw.clicked.connect(self.rotate_CCW)
@@ -70,6 +71,13 @@ class RightPanel(QWidget):
 
         if obj:
             self.imgViewer.zoomOut(obj)
+
+    def zoom_back_to_original(self):
+
+        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+
+        if obj:
+            self.imgViewer.zoomToOriginal(obj)
 
     def rotate_CW(self):
 
