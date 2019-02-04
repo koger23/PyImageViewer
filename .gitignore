@@ -108,3 +108,7 @@ venv.bak/
 
 # JSON files
 *.json
+
+# temporary folders
+tmp/
+temp/

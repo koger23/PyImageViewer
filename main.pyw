@@ -1,3 +1,4 @@
+#!python3
 from PySide2.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget
 from PySide2.QtGui import QPixmap
 from modules import rightSidePanel, leftSidePanel
