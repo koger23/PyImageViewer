@@ -1,6 +1,5 @@
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel, QPushButton
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QPushButton
 from PySide2.QtGui import QPixmap
-from PySide2.QtCore import Qt
 from utils import config
 
 
@@ -34,7 +33,7 @@ class NaviButtons(QWidget):
         self.btnZoomIn.setIcon(pixmapPlus)
 
         self.btnZoomSetBack = QPushButton()
-        self.setToolTip("Zoom back")
+        self.setToolTip("Fit view")
         mainLayout.addWidget(self.btnZoomSetBack)
         pixmapPlus = QPixmap('images/icon_back_to_original.png')
         self.btnZoomSetBack.setIcon(pixmapPlus)

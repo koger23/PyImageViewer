@@ -1,6 +1,5 @@
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel, QScrollArea, QSizePolicy, QGraphicsView, QGraphicsScene, \
-    QGraphicsPixmapItem, QFrame
-from PySide2.QtGui import QPixmap, QBrush, QPen, QColor, QImage
+from PySide2.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFrame
+from PySide2.QtGui import QPixmap, QBrush, QColor
 from PySide2.QtCore import Qt, QPoint, QRectF, Signal
 
 
@@ -92,30 +91,11 @@ class ImageViewer(QGraphicsView):
             self.photoClicked.emit(QPoint(event.pos()))
         super(ImageViewer, self).mousePressEvent(event)
 
-    # OLD FUNCTION FROM HERE
-    def _rotateCW(self):
+    def zoomIn(self):
 
-        self.picObject.rotateCW()
-        self.setPhoto(self.picObject)
+        self.scale(1.1, 1.1)
 
-        self.fitInView()
-        self.imageBrowser.imgBrowser.refresh()
-
-    def _rotateCCW(self):
-
-        self.picObject.rotateCCW()
-        self.setPhoto(self.imageBrowser.imgBrowser.getSelectePicture().image)
-        self.imageBrowser.imgBrowser.refresh()
-
-    def zoomIn(self, imageObj):
-
-        self.scale(1.2, 1.2)
-
-    def zoomToOriginal(self, imageObj):
-
-        self.fitInView()
-
-    def zoomOut(self, imageObj):
+    def zoomOut(self):
 
         self.scale(0.9, 0.9)
 

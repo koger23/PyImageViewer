@@ -63,14 +63,14 @@ class RightPanel(QWidget):
         obj = self.imgBrowser.imgBrowser.getSelectePicture()
 
         if obj:
-            self.imgViewer.zoomIn(obj)
+            self.imgViewer.zoomIn()
 
     def zoom_out(self):
 
         obj = self.imgBrowser.imgBrowser.getSelectePicture()
 
         if obj:
-            self.imgViewer.zoomOut(obj)
+            self.imgViewer.zoomOut()
 
     def zoom_back_to_original(self):
 
@@ -86,6 +86,7 @@ class RightPanel(QWidget):
         if obj:
             obj.rotateCW()
             self.imgBrowser.repaint()
+            self.imgViewer.setPhoto(obj)
 
     def rotate_CCW(self):
 
@@ -94,6 +95,7 @@ class RightPanel(QWidget):
         if obj:
             obj.rotateCCW()
             self.imgBrowser.repaint()
+            self.imgViewer.setPhoto(obj)
 
     def flip_Horizontal(self):
 
@@ -102,7 +104,7 @@ class RightPanel(QWidget):
         if obj:
             obj.horizontalFlip()
             self.imgBrowser.repaint()
-            self.imgViewer.refreshView()
+            self.imgViewer.setPhoto(obj)
 
     def flip_Vertical(self):
 
@@ -111,8 +113,7 @@ class RightPanel(QWidget):
         if obj:
             obj.verticalFlip()
             self.imgBrowser.repaint()
-            self.imgViewer.refreshView()
-
+            self.imgViewer.setPhoto(obj)
 
     def getSelectedObject(self):
 
