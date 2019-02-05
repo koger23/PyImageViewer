@@ -121,8 +121,8 @@ class RightPanel(QWidget):
         obj = self.imgBrowser.imgBrowser.getSelectePicture()
 
         if obj:
-            self.imgViewer.setPicture(obj)
-
+            # self.imgViewer.setPicture(obj)
+            self.imgViewer.setPhoto(obj)
 
 if __name__ == '__main__':
 
