@@ -1,2 +1,2 @@
 # PyImageViewer
-Image viewer written in PySide2
+Image viewer written in Python3 using PySide2 (Qt5)
