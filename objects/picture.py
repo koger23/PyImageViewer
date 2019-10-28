@@ -1,7 +1,7 @@
 import os
-from PySide2.QtGui import QImage, QTransform
+
 from PySide2.QtCore import QSize, Qt
-from PySide2.QtWidgets import QMessageBox
+from PySide2.QtGui import QImage, QTransform
 
 
 class Picture(object):
@@ -35,13 +35,12 @@ class Picture(object):
         img.save(self.path)
 
     def zoomIn(self):
-        self.scale = self.scale*0.9
+        self.scale = self.scale * 0.9
 
     def zoomOut(self):
-        self.scale = self.scale*1.1
+        self.scale = self.scale * 1.1
 
     def rotateCW(self):
-
         img = QImage(self.path)
 
         transform = QTransform()
@@ -53,9 +52,7 @@ class Picture(object):
         self.image = img
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
 
-
     def rotateCCW(self):
-
         img = QImage(self.path)
 
         transform = QTransform()
@@ -69,5 +66,4 @@ class Picture(object):
         self.thumbnail = self.image.scaled(QSize(110, 110), aspectMode=Qt.KeepAspectRatio, mode=Qt.SmoothTransformation)
 
     def saveImage(self):
-
         self.image.save(self.path)

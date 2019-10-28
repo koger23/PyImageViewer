@@ -1,5 +1,5 @@
-from PySide2.QtWidgets import QFileSystemModel, QTreeView, QVBoxLayout, QWidget
 from PySide2.QtCore import QDir
+from PySide2.QtWidgets import QFileSystemModel, QTreeView, QVBoxLayout, QWidget
 
 
 class TreeView(QWidget):
@@ -44,12 +44,10 @@ class TreeView(QWidget):
         self.tree.setColumnHidden(2, True)
         self.tree.setColumnHidden(3, True)
 
-
         self.repaint()
 
 
 if __name__ == '__main__':
-
     from PySide2.QtWidgets import QApplication
     import sys
 

@@ -1,10 +1,9 @@
-from PySide2.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFrame
-from PySide2.QtGui import QPixmap, QBrush, QColor
 from PySide2.QtCore import Qt, QPoint, QRectF, Signal
+from PySide2.QtGui import QPixmap, QBrush, QColor
+from PySide2.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFrame
 
 
 class ImageViewer(QGraphicsView):
-
     photoClicked = Signal(QPoint)
 
     def __init__(self, imageBrowser, parent=None):
@@ -98,13 +97,3 @@ class ImageViewer(QGraphicsView):
     def zoomOut(self):
 
         self.scale(0.9, 0.9)
-
-if __name__ == '__main__':
-
-    from PySide2.QtWidgets import QApplication
-    import sys
-
-    app = QApplication(sys.argv)
-    window = ImageViewer()
-    window.show()
-    app.exec_()
