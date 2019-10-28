@@ -1,19 +1,17 @@
 from PySide2.QtWidgets import QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QFileDialog
 
-from modules.Widgets.folderBrowserView import FolderBrowserView
+from modules.Widgets.folderBrowserListWidget import FolderBrowserListWidget
 from utils import config
 
 
-class FolderBrowser(QWidget):
+class FolderBrowserWidget(QWidget):
 
-    def __init__(self, leftPanel):
-        super(FolderBrowser, self).__init__()
+    def __init__(self):
+        super(FolderBrowserWidget, self).__init__()
 
         mainLayout = QVBoxLayout()
         mainLayout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(mainLayout)
-
-        self.leftPanel = leftPanel
         self.config = config.loadConfig()
 
         buttonLayout = QHBoxLayout()
@@ -27,7 +25,7 @@ class FolderBrowser(QWidget):
         buttonLayout.addWidget(removeFolder_btn)
         removeFolder_btn.clicked.connect(self.removeFolder)
 
-        self.folderBrowserView = FolderBrowserView(self.config)
+        self.folderBrowserView = FolderBrowserListWidget(self.config)
         self.folderBrowserView.setObjectName("FolderBrowser")
         mainLayout.addWidget(self.folderBrowserView)
 
@@ -40,6 +38,7 @@ class FolderBrowser(QWidget):
             if folder not in self.config["folders"]:
                 self.config["folders"].append(folder)
             config.saveConfig(self.config)
+
         self.folderBrowserView.refreshView()
 
     def removeFolder(self):
@@ -50,4 +49,3 @@ class FolderBrowser(QWidget):
         self.config["folders"].remove(folderPath)
         config.saveConfig(self.config)
         self.folderBrowserView.refreshView()
-        # self.leftPanel.panelRight.imgBrowser.browserView.refresh()

@@ -4,7 +4,6 @@ import os
 
 def searchPictures(path, extensions):
     extensionList = extensions
-
     pictureList = []
 
     for file in os.listdir(path):

@@ -3,13 +3,13 @@ from PySide2.QtGui import QPixmap, QBrush, QColor
 from PySide2.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFrame
 
 
-class ImageViewer(QGraphicsView):
+class ImageGraphicsView(QGraphicsView):
     photoClicked = Signal(QPoint)
 
     def __init__(self, imageBrowser, parent=None):
-        super(ImageViewer, self).__init__(parent)
+        super(ImageGraphicsView, self).__init__(parent)
 
-        self.setMinimumSize(700, 300)
+        self.setMinimumSize(640, 480)
         self._zoom = 0
         self._empty = True
         self._scene = QGraphicsScene(self)
@@ -53,10 +53,10 @@ class ImageViewer(QGraphicsView):
             if self.hasPhoto():
                 unity = self.transform().mapRect(QRectF(0, 0, 1, 1))
                 self.scale(1 / unity.width(), 1 / unity.height())
-                viewrect = self.viewport().rect()
-                scenerect = self.transform().mapRect(rect)
-                factor = min(viewrect.width() / scenerect.width(),
-                             viewrect.height() / scenerect.height())
+                viewRect = self.viewport().rect()
+                sceneRect = self.transform().mapRect(rect)
+                factor = min(viewRect.width() / sceneRect.width(),
+                             viewRect.height() / sceneRect.height())
                 self.scale(factor, factor)
             self._zoom = 0
 
@@ -68,12 +68,13 @@ class ImageViewer(QGraphicsView):
             else:
                 factor = 0.8
                 self._zoom -= 1
+
             if self._zoom > 0:
                 self.scale(factor, factor)
             elif self._zoom == 0:
                 self.fitInView()
             else:
-                self._zoom = 0
+                self.scale(factor, factor)
 
     def toggleDragMode(self):
         if self.dragMode() == QGraphicsView.ScrollHandDrag:
@@ -84,7 +85,7 @@ class ImageViewer(QGraphicsView):
     def mousePressEvent(self, event):
         if self._photo.isUnderMouse():
             self.photoClicked.emit(QPoint(event.pos()))
-        super(ImageViewer, self).mousePressEvent(event)
+        super(ImageGraphicsView, self).mousePressEvent(event)
 
     def zoomIn(self):
         self.scale(1.1, 1.1)

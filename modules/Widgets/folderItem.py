@@ -1,5 +1,10 @@
+import os
+
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QListWidgetItem
+
+from main import imageFolderPath
+from utils import config
 
 
 class FolderItem(QListWidgetItem):
@@ -11,4 +16,5 @@ class FolderItem(QListWidgetItem):
         self.folderName = self.path.split("/")[-1]
         self.setText(self.folderName)
         self.setToolTip(self.path)
-        self.setIcon(QIcon("images/icon_folder.png"))
+        self.config = config.loadConfig()
+        self.setIcon(QIcon(os.path.join(imageFolderPath, self.config["icons"][4])))

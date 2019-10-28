@@ -1,11 +1,11 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout
 
-from modules.Widgets.imageBrowserView import ImageBrowserView
+from modules.Widgets.imageBrowserListWidget import ImageBrowserListWidget
 
 
 class ImageBrowserWidget(QWidget):
 
-    def __init__(self, folderBrowser):
+    def __init__(self):
         super(ImageBrowserWidget, self).__init__()
         self.setFixedHeight(170)
 
@@ -13,20 +13,22 @@ class ImageBrowserWidget(QWidget):
         mainLayout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(mainLayout)
 
-        self.browserView = ImageBrowserView(folderBrowser)
-        self.browserView.setObjectName("ImageBrowser")
-        mainLayout.addWidget(self.browserView)
+        self.imageBrowserListView = ImageBrowserListWidget()
+        self.imageBrowserListView.setObjectName("ImageBrowser")
+        mainLayout.addWidget(self.imageBrowserListView)
 
-    def nextItem(self):
+    def nextImage(self):
+        self.imageBrowserListView.setCurrentRow(self.imageBrowserListView.currentIndex().row() + 1)
 
-        self.browserView.setCurrentRow(self.browserView.currentIndex().row() + 1)
+        if self.imageBrowserListView.currentIndex().row() == -1:
+            self.imageBrowserListView.setCurrentRow(0)
 
-        if self.browserView.currentIndex().row() == -1:
-            self.browserView.setCurrentRow(0)
+    def previousImage(self):
+        self.imageBrowserListView.setCurrentRow(self.imageBrowserListView.currentIndex().row() - 1)
+        self.imageBrowserListView.currentIndex()
 
-    def prevItem(self):
+        if self.imageBrowserListView.currentIndex().row() == -1:
+            self.imageBrowserListView.setCurrentRow(0)
 
-        self.browserView.setCurrentRow(self.browserView.currentIndex().row() - 1)
-
-        if self.browserView.currentIndex().row() == -1:
-            self.browserView.setCurrentRow(0)
+    def setImageByIndex(self, index=0):
+        self.imageBrowserListView.setCurrentRow(index)

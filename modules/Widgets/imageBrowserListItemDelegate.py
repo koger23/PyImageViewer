@@ -3,10 +3,10 @@ from PySide2.QtGui import QPen, QColor, QBrush, QPixmap
 from PySide2.QtWidgets import QStyledItemDelegate, QStyle
 
 
-class ImageBrowserViewDelegate(QStyledItemDelegate):
+class ImageBrowserListItemDelegate(QStyledItemDelegate):
 
     def __init__(self):
-        super(ImageBrowserViewDelegate, self).__init__()
+        super(ImageBrowserListItemDelegate, self).__init__()
 
         self.whitePen = QPen(QColor("#ffffff"))
         self.bgColor = QBrush(QColor(255, 255, 255, 0))
