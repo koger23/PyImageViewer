@@ -1,24 +1,22 @@
-from PySide2.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFrame
-from PySide2.QtGui import QPixmap, QBrush, QColor
 from PySide2.QtCore import Qt, QPoint, QRectF, Signal
+from PySide2.QtGui import QPixmap, QBrush, QColor
+from PySide2.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFrame
 
 
 class ImageViewer(QGraphicsView):
-
     photoClicked = Signal(QPoint)
 
     def __init__(self, imageBrowser, parent=None):
         super(ImageViewer, self).__init__(parent)
 
         self.setMinimumSize(700, 300)
-
         self._zoom = 0
         self._empty = True
         self._scene = QGraphicsScene(self)
         self._photo = QGraphicsPixmapItem()
         self._scene.addItem(self._photo)
-        self.setScene(self._scene)
 
+        self.setScene(self._scene)
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.AnchorUnderMouse)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -27,13 +25,10 @@ class ImageViewer(QGraphicsView):
         self.setFrameShape(QFrame.NoFrame)
 
         self.picObject = None
-
         self.imageBrowser = imageBrowser
 
     def setPhoto(self, imgObj=None):
-
         self.picObject = imgObj
-
         self._zoom = 0
 
         pixmap = QPixmap(QPixmap.fromImage(imgObj.image))
@@ -51,7 +46,7 @@ class ImageViewer(QGraphicsView):
     def hasPhoto(self):
         return not self._empty
 
-    def fitInView(self, scale=True):
+    def fitInView(self, scale=True, **kwargs):
         rect = QRectF(self._photo.pixmap().rect())
         if not rect.isNull():
             self.setSceneRect(rect)
@@ -92,19 +87,7 @@ class ImageViewer(QGraphicsView):
         super(ImageViewer, self).mousePressEvent(event)
 
     def zoomIn(self):
-
         self.scale(1.1, 1.1)
 
     def zoomOut(self):
-
         self.scale(0.9, 0.9)
-
-if __name__ == '__main__':
-
-    from PySide2.QtWidgets import QApplication
-    import sys
-
-    app = QApplication(sys.argv)
-    window = ImageViewer()
-    window.show()
-    app.exec_()

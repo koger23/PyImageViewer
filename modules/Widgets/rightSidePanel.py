@@ -1,29 +1,28 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout, QMessageBox
-from modules import imageViewer, naviButtons, imageBrowser
+
+from modules.Widgets import imageViewer, imageBrowserWidget, naviButtons
+
 
 class RightPanel(QWidget):
 
-    def __init__(self, folderBrowser):
+    def __init__(self, leftPanel):
         super(RightPanel, self).__init__()
 
         mainLayout = QVBoxLayout()
         mainLayout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(mainLayout)
-
-        self.folderBrowser = folderBrowser
-
+        self.leftPanel = leftPanel
+        self.folderBrowser = self.leftPanel.folderBrowser
         self.naviButtons = naviButtons.NaviButtons()
         mainLayout.addWidget(self.naviButtons)
 
-        self.imgBrowser = imageBrowser.ImageBrowser(folderBrowser)
+        self.imgBrowser = imageBrowserWidget.ImageBrowserWidget(self.leftPanel.folderBrowser)
         self.imgViewer = imageViewer.ImageViewer(self.imgBrowser)
         mainLayout.addWidget(self.imgViewer)
-
         mainLayout.addWidget(self.imgBrowser)
 
-        self.imgBrowser.imgBrowser.itemSelectionChanged.connect(self.getSelectedObject)
+        self.imgBrowser.browserView.itemSelectionChanged.connect(self.getSelectedObject)
 
-        # Connect to button signals
         self.naviButtons.btnLeft.clicked.connect(self.imgBrowser.prevItem)
         self.naviButtons.btnRight.clicked.connect(self.imgBrowser.nextItem)
         self.naviButtons.btnZoomIn.clicked.connect(self.zoom_in)
@@ -36,11 +35,9 @@ class RightPanel(QWidget):
         self.naviButtons.btnDeletePicture.clicked.connect(self.delete_Picture)
 
     def delete_Picture(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+        obj = self.imgBrowser.browserView.getSelectPicture()
 
         if obj:
-
             msgBox = QMessageBox()
             msgBox.setText(u'The picture will be deleted from your computer.\n\nAre you sure?')
             msgBox.setWindowTitle('File deletion')
@@ -51,37 +48,26 @@ class RightPanel(QWidget):
 
             if response == QMessageBox.Yes:
                 obj.deletePicture()
-                self.imgBrowser.imgBrowser.takeItem(self.imgBrowser.imgBrowser.currentRow())
+                self.imgBrowser.browserView.takeItem(self.imgBrowser.browserView.currentRow())
             elif QMessageBox.Cancel:
                 return
             else:
                 return
 
-
     def zoom_in(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
-
-        if obj:
+        if self.imgBrowser.browserView.getSelectPicture():
             self.imgViewer.zoomIn()
 
     def zoom_out(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
-
-        if obj:
+        if self.imgBrowser.browserView.getSelectPicture():
             self.imgViewer.zoomOut()
 
     def zoom_back_to_original(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
-
-        if obj:
+        if self.imgBrowser.browserView.getSelectPicture():
             self.imgViewer.fitInView()
 
     def rotate_CW(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+        obj = self.imgBrowser.browserView.getSelectPicture()
 
         if obj:
             obj.rotateCW()
@@ -89,8 +75,7 @@ class RightPanel(QWidget):
             self.imgViewer.setPhoto(obj)
 
     def rotate_CCW(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+        obj = self.imgBrowser.browserView.getSelectPicture()
 
         if obj:
             obj.rotateCCW()
@@ -98,8 +83,7 @@ class RightPanel(QWidget):
             self.imgViewer.setPhoto(obj)
 
     def flip_Horizontal(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+        obj = self.imgBrowser.browserView.getSelectPicture()
 
         if obj:
             obj.horizontalFlip()
@@ -107,8 +91,7 @@ class RightPanel(QWidget):
             self.imgViewer.setPhoto(obj)
 
     def flip_Vertical(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+        obj = self.imgBrowser.browserView.getSelectPicture()
 
         if obj:
             obj.verticalFlip()
@@ -116,18 +99,7 @@ class RightPanel(QWidget):
             self.imgViewer.setPhoto(obj)
 
     def getSelectedObject(self):
-
-        obj = self.imgBrowser.imgBrowser.getSelectePicture()
+        obj = self.imgBrowser.browserView.getSelectPicture()
 
         if obj:
             self.imgViewer.setPhoto(obj)
-
-if __name__ == '__main__':
-
-    from PySide2.QtWidgets import QApplication
-    import sys
-
-    app = QApplication(sys.argv)
-    window = RightPanel()
-    window.show()
-    app.exec_()
