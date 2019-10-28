@@ -1,5 +1,6 @@
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QPushButton
 from PySide2.QtGui import QPixmap
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QPushButton
+
 from utils import config
 
 
@@ -73,6 +74,3 @@ class NaviButtons(QWidget):
         mainLayout.addWidget(self.btnDeletePicture)
         pixmapDeletePic = QPixmap('images/icon_delete.png')
         self.btnDeletePicture.setIcon(pixmapDeletePic)
-
-
-

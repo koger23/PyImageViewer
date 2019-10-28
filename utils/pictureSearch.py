@@ -1,7 +1,8 @@
-import os, fnmatch
+import fnmatch
+import os
+
 
 def searchPictures(path, extensions):
-
     extensionList = extensions
 
     pictureList = []
