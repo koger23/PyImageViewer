@@ -8,9 +8,6 @@ class PictureItem(QListWidgetItem):
         super(PictureItem, self).__init__(parent)
 
         self.pictureObj = pictureObj
-
         self.setSizeHint(QSize(120, 120))
-
         self.setData(Qt.UserRole, pictureObj)
-
         self.setToolTip(str(pictureObj.name) + "\n" + pictureObj.resolution)

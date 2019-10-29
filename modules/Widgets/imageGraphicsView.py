@@ -3,21 +3,20 @@ from PySide2.QtGui import QPixmap, QBrush, QColor
 from PySide2.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFrame
 
 
-class ImageViewer(QGraphicsView):
+class ImageGraphicsView(QGraphicsView):
     photoClicked = Signal(QPoint)
 
     def __init__(self, imageBrowser, parent=None):
-        super(ImageViewer, self).__init__(parent)
+        super(ImageGraphicsView, self).__init__(parent)
 
-        self.setMinimumSize(700, 300)
-
+        self.setMinimumSize(640, 480)
         self._zoom = 0
         self._empty = True
         self._scene = QGraphicsScene(self)
         self._photo = QGraphicsPixmapItem()
         self._scene.addItem(self._photo)
-        self.setScene(self._scene)
 
+        self.setScene(self._scene)
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.AnchorUnderMouse)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -26,13 +25,10 @@ class ImageViewer(QGraphicsView):
         self.setFrameShape(QFrame.NoFrame)
 
         self.picObject = None
-
         self.imageBrowser = imageBrowser
 
     def setPhoto(self, imgObj=None):
-
         self.picObject = imgObj
-
         self._zoom = 0
 
         pixmap = QPixmap(QPixmap.fromImage(imgObj.image))
@@ -50,17 +46,17 @@ class ImageViewer(QGraphicsView):
     def hasPhoto(self):
         return not self._empty
 
-    def fitInView(self, scale=True):
+    def fitInView(self, scale=True, **kwargs):
         rect = QRectF(self._photo.pixmap().rect())
         if not rect.isNull():
             self.setSceneRect(rect)
             if self.hasPhoto():
                 unity = self.transform().mapRect(QRectF(0, 0, 1, 1))
                 self.scale(1 / unity.width(), 1 / unity.height())
-                viewrect = self.viewport().rect()
-                scenerect = self.transform().mapRect(rect)
-                factor = min(viewrect.width() / scenerect.width(),
-                             viewrect.height() / scenerect.height())
+                viewRect = self.viewport().rect()
+                sceneRect = self.transform().mapRect(rect)
+                factor = min(viewRect.width() / sceneRect.width(),
+                             viewRect.height() / sceneRect.height())
                 self.scale(factor, factor)
             self._zoom = 0
 
@@ -72,12 +68,13 @@ class ImageViewer(QGraphicsView):
             else:
                 factor = 0.8
                 self._zoom -= 1
+
             if self._zoom > 0:
                 self.scale(factor, factor)
             elif self._zoom == 0:
                 self.fitInView()
             else:
-                self._zoom = 0
+                self.scale(factor, factor)
 
     def toggleDragMode(self):
         if self.dragMode() == QGraphicsView.ScrollHandDrag:
@@ -88,12 +85,10 @@ class ImageViewer(QGraphicsView):
     def mousePressEvent(self, event):
         if self._photo.isUnderMouse():
             self.photoClicked.emit(QPoint(event.pos()))
-        super(ImageViewer, self).mousePressEvent(event)
+        super(ImageGraphicsView, self).mousePressEvent(event)
 
     def zoomIn(self):
-
         self.scale(1.1, 1.1)
 
     def zoomOut(self):
-
         self.scale(0.9, 0.9)
