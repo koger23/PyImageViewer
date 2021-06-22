@@ -22,6 +22,7 @@ class PyImageViewer(QMainWindow):
 
     def __init__(self, args=None):
         super(PyImageViewer, self).__init__()
+        print("Args: ", args)
 
         self.openedPicture = ""
         if len(args) > 1:

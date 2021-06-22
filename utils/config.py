@@ -1,8 +1,8 @@
 import json
 import os
+from pathlib import Path
 
-from main import mainPath
-
+mainPath = mainPath = Path(__file__).parents[0]
 configFile = "config.json"
 
 
