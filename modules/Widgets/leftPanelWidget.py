@@ -21,10 +21,10 @@ class LeftPanelWidget(QWidget):
         # self.treeView = TreeView()
         # mainLayout.addWidget(self.treeView)
 
-        try:
-            self.folderBrowser.folderBrowserView.currentItem().path
-        except AttributeError:
-            pass
+        # try:
+        #     self.folderBrowser.folderBrowserView.currentItem().path
+        # except AttributeError:
+        #     pass
 
     def selectedItemChanged(self):
         self.treeView.changePath(self.folderBrowser.folderBrowserView.getSelectedItem().path)
