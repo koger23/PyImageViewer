@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['main.pyw'],
              pathex=['/home/koger/Programming/PyImageViewer'],
              binaries=[],
              datas=[],

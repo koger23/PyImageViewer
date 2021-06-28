@@ -11,9 +11,7 @@ mainPath = sys.argv[0].split("main.pyw")[0]
 imageFolderPath = os.path.join(mainPath, "images")
 
 if mainPath.find(".exe"):
-    print("yes: ", mainPath)
     mainPath = mainPath.split("PyImageViewer.exe")[0]
-    print("yes: ", mainPath)
     imageFolderPath = os.path.join(mainPath, "images")
 
 
@@ -28,7 +26,6 @@ class PyImageViewer(QMainWindow):
 
     def __init__(self, args=None):
         super(PyImageViewer, self).__init__()
-        print("Args: ", args)
 
         self.openedPicture = ""
         if len(args) > 1:
