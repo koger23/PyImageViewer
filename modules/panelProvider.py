@@ -25,3 +25,19 @@ class PanelProvider:
             PanelProvider.leftPanel.setHidden(True)
             PanelProvider.leftPanel.folderBrowser.folderBrowserView.setCurrentFolder(
                 main.openedPicture)
+        else:
+            print(PanelProvider.leftPanel.folderBrowser.folderBrowserView.currentFolder)
+            pic = PanelProvider.leftPanel.folderBrowser.folderBrowserView.currentFolder
+            # PanelProvider.leftPanel.folderBrowser.folderBrowserView.setCurrentFolder(pic)
+            pic = PanelProvider.leftPanel.folderBrowser.folderBrowserView.getPictureObjects()
+            print(pic)
+            # pic = pic[0]
+            # PanelProvider.leftPanel.folderBrowser.folderBrowserView.setCurrentFolder(pic.path)
+
+            try:
+                currPath = self.leftPanel.folderBrowser.folderBrowserView.currentItem().path
+                PanelProvider.leftPanel.folderBrowser.folderBrowserView.setCurrentFolder(currPath)
+                pics = PanelProvider.leftPanel.folderBrowser.folderBrowserView.getPictureObjects()
+                # pic = pics[0]
+            except AttributeError:
+                pass

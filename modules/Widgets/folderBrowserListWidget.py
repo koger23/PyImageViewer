@@ -5,6 +5,7 @@ from PySide2.QtWidgets import QListWidget
 from modules.Widgets.folderItem import FolderItem
 from modules import panelProvider
 from objects import picture
+from os import path
 from utils import pictureSearch
 
 
@@ -33,8 +34,14 @@ class FolderBrowserListWidget(QListWidget):
                 self.pictureObjects.append(pictureObj)
 
         elif type(arg) is str:
-            self.currentFolder = os.path.dirname(os.path.abspath(arg))
-            pictureFileList = pictureSearch.searchPictures(self.currentFolder, self.config["extensions"])
+            if path.isdir(arg):
+                self.currentFolder = arg
+                pictureFileList = pictureSearch.searchPictures(self.currentFolder, self.config["extensions"])
+
+            if path.isfile(arg):
+                self.currentFolder = os.path.dirname(os.path.abspath(arg))
+
+                pictureFileList = pictureSearch.searchPictures(self.currentFolder, self.config["extensions"])
 
             index = 0
             for i in range(len(pictureFileList)):

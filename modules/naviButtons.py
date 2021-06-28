@@ -2,16 +2,20 @@ import os
 
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QWidget, QHBoxLayout, QPushButton
+from pathlib import Path
 
-from main import imageFolderPath
 from utils import config
 
 
 class NaviButtons(QWidget):
 
+
     def __init__(self):
         super(NaviButtons, self).__init__()
         self.setFixedHeight(50)
+
+        mainPath = Path(__file__).parents[0]
+        imageFolderPath = os.path.join(os.path.dirname(mainPath), "images")
 
         mainLayout = QHBoxLayout(self)
         mainLayout.setContentsMargins(0, 0, 0, 0)

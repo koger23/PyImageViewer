@@ -19,7 +19,7 @@ class ImageBrowserListWidget(QListWidget):
         self.setSpacing(10)
         self.setItemDelegate(ImageBrowserListItemDelegate())
         self.setFixedHeight(170)
-        self.currentPicture = None
+        # self.currentPicture = None
 
         self.folderBrowserView = panelProvider.PanelProvider.leftPanel.folderBrowser.folderBrowserView
         self.folderBrowserView.itemClicked.connect(self.refresh)
